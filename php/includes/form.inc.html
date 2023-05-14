@@ -1,4 +1,4 @@
-<form>
+<form action="index.php" method="POST">
     <div class="form-floating mb-3">
         <input type="text" class="form-control" name="prenom" id="prenom" placeholder="Prénom">
         <label for="floatingInput">Prénom</label>
@@ -11,17 +11,22 @@
         <label for="form-label">Age (18 à 70 ans)</label>
         <input min="18" max="70" type="number" class="form-control" name="age" id="age" placeholder="Renseignez votre âge">
     </div>
+    <div class="mb-3">
+        <span class="input-group-text">Taille (entre 1,6 et 2m)</span>
+        <input type="number" min="1.6" max="2" step="0.01" name="taille" aria-label="First name" class="form-control">
+        <span class="input-group-text">M</span>
+    </div>
     <fieldset class="row mb-3">
         <div class="col-sm-10">
             <div class="form-check">
-                <input class="form-check-input" type="radio" name="homme" id="homme" value="homme" checked>
+                <input class="form-check-input" type="radio" name="genre" id="homme" value="homme" checked>
                 <label class="form-check-label" for="gridRadios1">Homme</label>
             </div>
             <div class="form-check">
-                <input class="form-check-input" type="radio" name="femme" id="femme" value="femme">
+                <input class="form-check-input" type="radio" name="genre" id="femme" value="femme">
                 <label class="form-check-label" for="gridRadios2">Femme</label>
             </div>
         </div>
     </fieldset>
-    <button type="submit" class="btn btn-primary">Enregistrer les données</button>
+    <button type="submit" class="btn btn-primary" name="register_data">Enregistrer les données</button>
 </form>
