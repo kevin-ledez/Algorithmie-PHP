@@ -1,16 +1,20 @@
 <?php
 session_start();
-$table = $_SESSION['table'];
 include "./includes/head.inc.html";
 include "./includes/header.inc.html";
 ?>
 
 <section>
     <div class="container">
-        <?php print_r($_SESSION); ?>
         <div class="row">
             <div class="col">
-                <?php include "./includes/ul.inc.php" ?>
+                <a href="index.php" class="list-group-item list-group-item-action active" aria-current="true">Home</a>
+                <?php 
+                    if (!empty($_SESSION)){
+                        $table = $_SESSION['table'];
+                        include "./includes/ul.inc.php";
+                    }
+                ?>
             </div>
             <div class="col">
 <?php
@@ -21,36 +25,53 @@ include "./includes/header.inc.html";
         $nom = $_POST['nom'];
         $age = $_POST['age'];
         $taille = $_POST['taille'];
-        $genre = $_POST['genre'];
+        $gender = $_POST['gender'];
 
         $table = array(
             'first_name' => $prenom,
             'last_name' => $nom,
             'age' => $age,
             'size' => $taille,
-            'genre' => $genre,
+            'gender' => $gender,
         );
         $_SESSION['table'] = $table;
-        echo "<h2>Données sauvegardées</h2>";
+            echo '<div class="alert alert-success text-center" role="alert">';
+            echo 'Données sauvegardées';
+            echo '</div>';
     }
     else if (isset($_GET['debugging'])){
-        echo "<h2>Débogage</h2><br>";
+        echo "<h2>Débogage</h2>";
+        echo "===> Lecture du tableau à l'aide de la fonction print_r()";
             print "<pre>";
             print_r ($table);
             print "</pre>";
     }
     else if (isset($_GET['concatenation'])){
-        echo "<h2>Concaténation</h2><br>";
+        echo "<h2>Concaténation</h2>";
+        echo "===> Construction d'une phrase avec le contenu du tableau";
+        echo "<p>Mr ".$table['first_name']." ".$table['last_name']."<br>";
+        echo "J'ai ".$table['age']." ans et je mesure ".$table['size']." m.</p>";
+        echo "===> Construction d'une phrase après MAJ du tableau";
+        $table['first_name'] = ucfirst($table['first_name']);
+        $table['last_name'] = strtoupper($table['last_name']);
+        echo "<p>Mr ".$table['first_name']." ".$table['last_name']."<br>";
+        echo "J'ai ".$table['age']." ans et je mesure ".$table['size']." m.</p>";
+        echo "===> Affichage d'une virgule à la place du point pour la taille";
+        $table['size'] = str_replace('.',',',$table['size']);
+        echo "<p>Mr ".$table['first_name']." ".$table['last_name']."<br>";
+        echo "J'ai ".$table['age']." ans et je mesure ".$table['size']." m.</p>";
     }
     else if (isset($_GET['loop'])){
-        echo "<h2>Boucle</h2><br>";
+        echo "<h2>Boucle</h2>";
     }
     else if (isset($_GET['function'])){
-        echo "<h2>Fonction</h2><br>";
+        echo "<h2>Fonction</h2>";
     }
     else if (isset($_GET['del'])){
         unset($_SESSION['table']);
-        echo "<h2>Données supprimées</h2>";
+        echo '<div class="alert alert-success text-center" role="alert">';
+        echo "Données supprimées";
+        echo '</div>';
     }
     else {
         echo "<a href='index.php?add'><button type='button' class='btn btn-primary'>Ajouter des données</button></a>";
