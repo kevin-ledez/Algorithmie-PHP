@@ -25,14 +25,14 @@ include "./includes/header.inc.html";
         $nom = $_POST['nom'];
         $age = $_POST['age'];
         $taille = $_POST['taille'];
-        $gender = $_POST['gender'];
+        $civility = $_POST['civility'];
 
         $table = array(
             'first_name' => $prenom,
             'last_name' => $nom,
             'age' => $age,
             'size' => $taille,
-            'gender' => $gender,
+            'civility' => $civility,
         );
         $_SESSION['table'] = $table;
             echo '<div class="alert alert-success text-center" role="alert">';
@@ -63,9 +63,16 @@ include "./includes/header.inc.html";
     }
     else if (isset($_GET['loop'])){
         echo "<h2>Boucle</h2>";
+        echo "===> Lecture du tableau à l'aide d'une boucle foreach()<br><br>";
+        $x = 0;
+        foreach ($table as $key => $value) {
+            echo '<p>à la ligne n°'.$x++.' corresponds à clé "'.$key.'" et valeur "'.$value.'"</p>';
+        }
     }
     else if (isset($_GET['function'])){
         echo "<h2>Fonction</h2>";
+        echo "===> J'utilise ma fonction readTable()<br><br>";
+        readTable($table);
     }
     else if (isset($_GET['del'])){
         unset($_SESSION['table']);
@@ -77,6 +84,14 @@ include "./includes/header.inc.html";
         echo "<a href='index.php?add'><button type='button' class='btn btn-primary'>Ajouter des données</button></a>";
         echo "<a type='button' class='btn btn-secondary'>Ajouter plus de données</a>";
     }
+
+    function readTable($table){
+        $x = 0;
+        foreach ($table as $key => $value) {
+            echo '<p>à la ligne n°'.$x++.' corresponds à clé "'.$key.'" et valeur "'.$value.'"</p>';
+        }
+    }
+
 ?>    
             </div>
         </div>
