@@ -8,7 +8,7 @@ include "./includes/header.inc.html";
     <div class="container">
         <div class="row">
             <div class="col">
-                <a href="index.php" class="list-group-item list-group-item-action active" aria-current="true">Home</a>
+                <a href="index.php" class="list-group-item list-group-item-action" aria-current="true">Home</a>
                 <?php 
                     if (!empty($_SESSION)){
                         $table = $_SESSION['table'];
@@ -91,12 +91,10 @@ include "./includes/header.inc.html";
             echo '<p>à la ligne n°'.$x++.' corresponds à clé "'.$key.'" et valeur "'.$value.'"</p>';
         }
     }
-
-?>    
+?>
             </div>
         </div>
     </div>
-
 </section>
 
 <?php include "./includes/footer.inc.html" ?>
