@@ -18,14 +18,28 @@ include "./includes/header.inc.html";
             </div>
             <div class="col">
 <?php
+
     if (isset($_GET['add'])){
         include "./includes/form.inc.html";
-    }else if (isset($_POST['register_data'])){
+    }
+    else if (isset($_GET['addmore'])){
+        include "./includes/form2.inc.php";
+    }
+    else if (isset($_POST['register_data'])){
         $prenom = $_POST['prenom'];
         $nom = $_POST['nom'];
         $age = $_POST['age'];
         $taille = $_POST['taille'];
         $civility = $_POST['civility'];
+        $color = isset($_POST['color']) ? $_POST['color'] : '';
+        $html = isset($_POST['html']) ? $_POST['html'] : '';
+        $css =  isset($_POST['css']) ? $_POST['css'] : '';
+        $javascript = isset($_POST['javascript']) ? $_POST['javascript'] : '';
+        $php = isset($_POST['php']) ? $_POST['php'] : '';
+        $mysql = isset($_POST['mysql']) ? $_POST['mysql'] : '';
+        $bootstrap = isset($_POST['bootstrap']) ? $_POST['bootstrap'] : '';
+        $symfony = isset($_POST['symfony']) ? $_POST['symfony'] : '';
+        $react = isset($_POST['react']) ? $_POST['react'] : '';
 
         $table = array(
             'first_name' => $prenom,
@@ -33,7 +47,17 @@ include "./includes/header.inc.html";
             'age' => $age,
             'size' => $taille,
             'civility' => $civility,
+            'color' => $color,
+            'html' => $html,
+            'css' => $css,
+            'javascript' => $javascript,
+            'php' => $php,
+            'mysql' => $mysql,
+            'bootstrap' => $bootstrap,
+            'symfony' => $symfony,
+            'react' => $react,
         );
+
         $_SESSION['table'] = $table;
             echo '<div class="alert alert-success text-center" role="alert">';
             echo 'Données sauvegardées';
@@ -49,16 +73,30 @@ include "./includes/header.inc.html";
     else if (isset($_GET['concatenation'])){
         echo "<h2>Concaténation</h2>";
         echo "===> Construction d'une phrase avec le contenu du tableau";
-        echo "<p>Mr ".$table['first_name']." ".$table['last_name']."<br>";
+        if ($table['civility'] == 'homme') {
+            echo "<p>Mr ".$table['first_name']." ".$table['last_name']."<br>";
+        }else{
+            echo "<p>Mme ".$table['first_name']." ".$table['last_name']."<br>";
+        }
         echo "J'ai ".$table['age']." ans et je mesure ".$table['size']." m.</p>";
+
         echo "===> Construction d'une phrase après MAJ du tableau";
         $table['first_name'] = ucfirst($table['first_name']);
         $table['last_name'] = strtoupper($table['last_name']);
-        echo "<p>Mr ".$table['first_name']." ".$table['last_name']."<br>";
+        if ($table['civility'] == 'homme') {
+            echo "<p>Mr ".$table['first_name']." ".$table['last_name']."<br>";
+        }else{
+            echo "<p>Mme ".$table['first_name']." ".$table['last_name']."<br>";
+        }
         echo "J'ai ".$table['age']." ans et je mesure ".$table['size']." m.</p>";
+        
         echo "===> Affichage d'une virgule à la place du point pour la taille";
         $table['size'] = str_replace('.',',',$table['size']);
-        echo "<p>Mr ".$table['first_name']." ".$table['last_name']."<br>";
+        if ($table['civility'] == 'homme') {
+            echo "<p>Mr ".$table['first_name']." ".$table['last_name']."<br>";
+        }else{
+            echo "<p>Mme ".$table['first_name']." ".$table['last_name']."<br>";
+        }
         echo "J'ai ".$table['age']." ans et je mesure ".$table['size']." m.</p>";
     }
     else if (isset($_GET['loop'])){
@@ -82,7 +120,7 @@ include "./includes/header.inc.html";
     }
     else {
         echo "<a href='index.php?add'><button type='button' class='btn btn-primary'>Ajouter des données</button></a>";
-        echo "<a type='button' class='btn btn-secondary'>Ajouter plus de données</a>";
+        echo "<a href='index.php?addmore'><button type='button' class='btn btn-secondary'>Ajouter plus de données</button></a>";
     }
 
     function readTable($table){
