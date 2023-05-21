@@ -40,6 +40,20 @@ include "./includes/header.inc.html";
         $bootstrap = isset($_POST['bootstrap']) ? $_POST['bootstrap'] : '';
         $symfony = isset($_POST['symfony']) ? $_POST['symfony'] : '';
         $react = isset($_POST['react']) ? $_POST['react'] : '';
+        
+        $filepath = 'uploaded/' . $_FILES['image']['name'];
+
+        if (move_uploaded_file($_FILES['image']['tmp_name'], $filepath)) {
+            echo "Image enregistrée";
+        }else{
+            echo "Image non enregistrée";
+        }
+
+        $extension = pathinfo($filepath, PATHINFO_EXTENSION);
+        $weight = filesize($filepath);
+        $name = pathinfo($filepath, PATHINFO_FILENAME);
+        $tempname = $_FILES['image']['tmp_name'];
+        $imgor = $_FILES['image']['error'];
 
         $table = array(
             'first_name' => $prenom,
@@ -56,6 +70,13 @@ include "./includes/header.inc.html";
             'bootstrap' => $bootstrap,
             'symfony' => $symfony,
             'react' => $react,
+            'img' => array(
+                'name' => $name,
+                'type' => $extension,
+                'tmpname' => $tempname,
+                'error' => $imgor,
+                'weight' => $weight,
+            )
         );
 
         $_SESSION['table'] = $table;
@@ -111,6 +132,7 @@ include "./includes/header.inc.html";
         echo "<h2>Fonction</h2>";
         echo "===> J'utilise ma fonction readTable()<br><br>";
         readTable($table);
+        echo "<img src='uploaded/".$table['img']['name'].".".$table['img']['type']."' alt='image'>";
     }
     else if (isset($_GET['del'])){
         unset($_SESSION['table']);
