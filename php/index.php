@@ -16,7 +16,7 @@ include "./includes/header.inc.html";
                     }
                 ?>
             </div>
-            <div class="col">
+            <div class="col">  
 <?php
 
     if (isset($_GET['add'])){
