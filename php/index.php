@@ -43,6 +43,15 @@ include "./includes/header.inc.html";
         $dob = isset($_POST['dob']) ? $_POST['dob'] : '';
 
         $filepath = 'uploaded/' . $_FILES['image']['name'];
+
+        $maxFileSize = 2000000;
+        $fileSize = $_FILES['image']['size'];
+        if ($fileSize > $maxFileSize){
+            echo '<div class="alert alert-danger text-center" role="alert">';
+            echo "La taille du fichier dépasse la limite autorisée";
+            echo '</div>';
+            exit();
+        }
         
         if (move_uploaded_file($_FILES['image']['tmp_name'], $filepath)) {
             echo '<div class="alert alert-success text-center" role="alert">';
