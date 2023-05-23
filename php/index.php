@@ -48,7 +48,19 @@ include "./includes/header.inc.html";
         $fileSize = $_FILES['image']['size'];
         if ($fileSize > $maxFileSize){
             echo '<div class="alert alert-danger text-center" role="alert">';
-            echo "La taille du fichier dépasse la limite autorisée";
+            echo "La taille de l'image doit être inférieure à 2Mo";
+            echo '</div>';
+            exit();
+        }
+
+        $uploadExtension = array('jpg', 'jpeg', 'png', 'gif');
+        $fileExtension = strtolower(pathinfo($_FILES['image']['name'], PATHINFO_EXTENSION));
+        if (!in_array($fileExtension, $uploadExtension)){
+            echo '<div class="alert alert-danger text-center" role="alert">';
+            echo 'Extension "'.$fileExtension.'" non prise en charge';
+            echo '</div>';
+            echo '<div class="alert alert-danger text-center" role="alert">';
+            echo "Seules les images au format jpg, jpeg, png et gif sont autorisées";
             echo '</div>';
             exit();
         }
