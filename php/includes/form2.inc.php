@@ -3,34 +3,34 @@
         <div class="card col-md-7 mx-auto my-1">
             <div class="card-body">
                 <div class="form-floating mb-3">
-                    <input type="text" class="form-control" name="prenom" id="prenom" placeholder="Prénom" value="<?php if (!empty($_SESSION)) echo $_SESSION['table']['first_name']; ?>">
+                    <input type="text" class="form-control" name="prenom" id="prenom" placeholder="Prénom" value="<?php if (!empty($_SESSION)) echo $_SESSION['table']['first_name']; ?>" required>
                     <label for="floatingInput">Prénom</label>
                 </div>
                 <div class="form-floating mb-3">
-                    <input type="text" class="form-control" name="nom" id="nom" placeholder="Nom" value="<?php if (!empty($_SESSION)) echo $_SESSION['table']['last_name']; ?>">
+                    <input type="text" class="form-control" name="nom" id="nom" placeholder="Nom" value="<?php if (!empty($_SESSION)) echo $_SESSION['table']['last_name']; ?>" required>
                     <label for="floatingInput">Nom</label>
                 </div>
                 <div class="mb-3">
                     <label for="form-label">Age (18 à 70 ans)</label>
-                    <input min="18" max="70" type="number" class="form-control" name="age" id="age" placeholder="Renseignez votre âge" value="<?php if (!empty($_SESSION)) echo $_SESSION['table']['age']; ?>">
+                    <input min="18" max="70" type="number" class="form-control" name="age" id="age" placeholder="Renseignez votre âge" value="<?php if (!empty($_SESSION)) echo $_SESSION['table']['age']; ?>" required>
                 </div>
                 <div class="input-group mb-3">
                     <span class="input-group-text">Taille (entre 1,26 et 3m)</span>
-                    <input type="number" min="1.26" max="3" step="0.01" name="taille" aria-label="Taille" class="form-control" value="<?php if (!empty($_SESSION)) echo $_SESSION['table']['size']; ?>">
+                    <input type="number" min="1.26" max="3" step="0.01" name="taille" aria-label="Taille" class="form-control" value="<?php if (!empty($_SESSION)) echo $_SESSION['table']['size']; ?>" required>
                     <span class="input-group-text">m</span>
                 </div>
                 <div class="col-sm-10">
                     <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="radio" name="civility" id="homme" value="homme" <?php if (!empty($_SESSION) && ($_SESSION['table']['civility']  == 'homme')) echo 'checked' ?>>
+                        <input class="form-check-input" type="radio" name="civility" id="homme" value="homme" <?php if (!empty($_SESSION) && ($_SESSION['table']['civility']  == 'homme')) echo 'checked' ?> required>
                         <label class="form-check-label" for="gridRadios1">Homme</label>
                     </div>
                     <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="radio" name="civility" id="femme" value="femme" <?php if (!empty($_SESSION) && ($_SESSION['table']['civility']  == 'femme')) echo 'checked' ?>>
+                        <input class="form-check-input" type="radio" name="civility" id="femme" value="femme" <?php if (!empty($_SESSION) && ($_SESSION['table']['civility']  == 'femme')) echo 'checked' ?> required>
                         <label class="form-check-label" for="gridRadios2">Femme</label>
                     </div>
                     <div class="mb-3">
                         <label for="form-label">Couleur préférée</label>
-                        <input type="color" class="form-control" name="color" id="color" value="#000000">
+                        <input type="color" class="form-control" name="color" id="color" value="<?php if (!empty($_SESSION)) echo $_SESSION['table']['color'] ?>">
                     </div>
                 </div>
             </div>
