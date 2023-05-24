@@ -72,7 +72,7 @@ include "./includes/header.inc.html";
             echo '<div class="alert alert-danger text-center" role="alert">';
             echo "Seules les images au format jpg, jpeg, png et gif sont autorisées";
             echo '</div>';
-            //exit();
+            exit();
         }
         
         //Enregistrement de l'image dans le dossier de stockage
