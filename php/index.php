@@ -1,5 +1,7 @@
 <?php
+//Démmarage de la session
 session_start();
+
 include "./includes/head.inc.html";
 include "./includes/header.inc.html";
 ?>
@@ -9,6 +11,7 @@ include "./includes/header.inc.html";
         <div class="row">
             <div class="col-md-2">
                 <a href="index.php" class="list-group-item list-group-item-action" aria-current="true">Home</a>
+                <!-- Affichage du menu de navigation si la session n'est pas vide -->
                 <?php 
                     if (!empty($_SESSION)){
                         $table = $_SESSION['table'];
@@ -18,13 +21,15 @@ include "./includes/header.inc.html";
             </div>
             <div class="col">  
 <?php
-
+    //Si URL = ADD
     if (isset($_GET['add'])){
         include "./includes/form.inc.html";
     }
+    //Si URL = ADDMORE
     else if (isset($_GET['addmore'])){
         include "./includes/form2.inc.php";
     }
+    //Traitement du formulaire
     else if (isset($_POST['register_data']) || isset($_POST['register_data_more'])){
         $prenom = $_POST['prenom'];
         $nom = $_POST['nom'];
@@ -42,9 +47,11 @@ include "./includes/header.inc.html";
         $react = isset($_POST['react']) ? $_POST['react'] : '';
         $dob = isset($_POST['dob']) ? $_POST['dob'] : '';
 
+        //Dossier de stockage des images
         $filepath = 'uploaded/' . $_FILES['image']['name'];
 
-        $maxFileSize = 2000000;
+        //Vérification de la taille de l'image
+        $maxFileSize = 2000000; //2Mo
         $fileSize = $_FILES['image']['size'];
         if ($fileSize > $maxFileSize){
             echo '<div class="alert alert-danger text-center" role="alert">';
@@ -53,6 +60,7 @@ include "./includes/header.inc.html";
             exit();
         }
 
+        //Vérification du type de fichier
         $uploadExtension = array('jpg', 'jpeg', 'png', 'gif');
         $fileExtension = strtolower(pathinfo($_FILES['image']['name'], PATHINFO_EXTENSION));
         if (!in_array($fileExtension, $uploadExtension)){
@@ -65,6 +73,7 @@ include "./includes/header.inc.html";
             exit();
         }
         
+        //Enregistrement de l'image dans le dossier de stockage
         if (move_uploaded_file($_FILES['image']['tmp_name'], $filepath)) {
             echo '<div class="alert alert-success text-center" role="alert">';
             echo "Image enregistrée";
@@ -73,13 +82,15 @@ include "./includes/header.inc.html";
             echo "Image non enregistrée";
         }
 
+        //Récupération des infos de l'image envoyée
         $extension = pathinfo($filepath, PATHINFO_EXTENSION);
         $weight = filesize($filepath);
         $name = pathinfo($filepath, PATHINFO_FILENAME);
         $tempname = $_FILES['image']['tmp_name'];
         $imgor = $_FILES['image']['error'];
-
-        $table = array(
+        
+        //Construction du tableau des données
+        $table = [
             'first_name' => $prenom,
             'last_name' => $nom,
             'age' => $age,
@@ -102,13 +113,15 @@ include "./includes/header.inc.html";
                 'error' => $imgor,
                 'weight' => $weight,
             )
-        );
+        ];
 
+        //Enregistrement du tableau dans la session
         $_SESSION['table'] = $table;
             echo '<div class="alert alert-success text-center" role="alert">';
             echo 'Données sauvegardées';
             echo '</div>';
     }
+    //Si URL = debugging
     else if (isset($_GET['debugging'])){
         echo "<h2>Débogage</h2>";
         echo "===> Lecture du tableau à l'aide de la fonction print_r()";
@@ -116,6 +129,7 @@ include "./includes/header.inc.html";
             print_r(array_filter($table));
             print "</pre>";
     }
+    //Si URL = concatenation
     else if (isset($_GET['concatenation'])){
         echo "<h2>Concaténation</h2>";
         echo "===> Construction d'une phrase avec le contenu du tableau<br>";
@@ -133,6 +147,7 @@ include "./includes/header.inc.html";
         echo readSex($table)." ".$table['first_name']." ".$table['last_name']."<br>";
         echo "J'ai ".$table['age']." ans et je mesure ".$table['size']." m.<br><br>";
     }
+    //Si URL = loop
     else if (isset($_GET['loop'])){
         echo "<h2>Boucle</h2>";
         echo "===> Lecture du tableau à l'aide d'une boucle foreach()<br><br>";
@@ -141,30 +156,46 @@ include "./includes/header.inc.html";
             echo '<p>à la ligne n°'.$x++.' corresponds à clé "'.$key.'" et valeur "'.$value.'"</p>';
         }
     }
+    //Si URL = function
     else if (isset($_GET['function'])){
         echo "<h2>Fonction</h2>";
         echo "===> J'utilise ma fonction readTable()<br><br>";
         readTable($table);
         echo "<img src='uploaded/".$table['img']['name'].".".$table['img']['type']."' alt='image'>";
     }
+    //Si URL = del
     else if (isset($_GET['del'])){
         unset($_SESSION['table']);
         echo '<div class="alert alert-success text-center" role="alert">';
         echo "Données supprimées";
         echo '</div>';
     }
+    //Si la SESSSION est vide on affiche les boutons
     else {
         echo "<a href='index.php?add'><button type='button' class='btn btn-primary'>Ajouter des données</button></a>";
         echo "<a href='index.php?addmore'><button type='button' class='btn btn-secondary'>Ajouter plus de données</button></a>";
     }
 
+    //La fonction readTable()
     function readTable($table){
         $x = 0;
-        foreach ($table as $key => $value) {
+
+        if (empty($table['img'])){
+            foreach ($table as $key => $value) {
+                echo '<p>à la ligne n°'.$x++.' corresponds à clé "'.$key.'" et valeur "'.$value.'"</p>';
+            }
+        }else{
+            foreach ($table as $key => $value) {
+            if ($key != 'img'){
+                echo '<p>à la ligne n°'.$x++.' corresponds à clé "'.$key.'" et valeur "'.$value.'"</p>';
+            }
+        }
+        foreach ($table['img'] as $key => $value) { 
             echo '<p>à la ligne n°'.$x++.' corresponds à clé "'.$key.'" et valeur "'.$value.'"</p>';
         }
     }
-
+}
+    //La fonction readSex() (affiche le civilité Mr ou Mme)
     function readSex($table){
         if ($table['civility'] == 'homme') {
             echo "Mr";
