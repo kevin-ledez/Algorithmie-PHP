@@ -8,7 +8,7 @@ include "./includes/header.inc.html";
 
 <section>
     <div class="container">
-        <div class="row">
+        <div class="row d-flex">
             <div class="col-md-2">
                 <a href="index.php" class="list-group-item list-group-item-action" aria-current="true">Home</a>
                 <!-- Affichage du menu de navigation si la session n'est pas vide -->
@@ -19,7 +19,7 @@ include "./includes/header.inc.html";
                     }
                 ?>
             </div>
-            <div class="col">  
+            <div class="col">
 <?php
     //Si URL = ADD
     if (isset($_GET['add'])){
@@ -36,6 +36,8 @@ include "./includes/header.inc.html";
         $age = $_POST['age'];
         $taille = $_POST['taille'];
         $civility = $_POST['civility'];
+    
+    if (isset($_POST['register_data_more'])){
         $color = isset($_POST['color']) ? $_POST['color'] : '';
         $html = isset($_POST['html']) ? $_POST['html'] : '';
         $css =  isset($_POST['css']) ? $_POST['css'] : '';
@@ -70,7 +72,7 @@ include "./includes/header.inc.html";
             echo '<div class="alert alert-danger text-center" role="alert">';
             echo "Seules les images au format jpg, jpeg, png et gif sont autorisées";
             echo '</div>';
-            exit();
+            //exit();
         }
         
         //Enregistrement de l'image dans le dossier de stockage
@@ -88,9 +90,21 @@ include "./includes/header.inc.html";
         $name = pathinfo($filepath, PATHINFO_FILENAME);
         $tempname = $_FILES['image']['tmp_name'];
         $imgor = $_FILES['image']['error'];
-        
+
+    }
+    
+    if (isset($_POST['register_data'])){
         //Construction du tableau des données
-        $table = [
+        $table = array(
+            'first_name' => $prenom,
+            'last_name' => $nom,
+            'age' => $age,
+            'size' => $taille,
+            'civility' => $civility,
+        );
+    }
+    if (isset($_POST['register_data_more'])){
+        $table = array(
             'first_name' => $prenom,
             'last_name' => $nom,
             'age' => $age,
@@ -113,7 +127,8 @@ include "./includes/header.inc.html";
                 'error' => $imgor,
                 'weight' => $weight,
             )
-        ];
+        );
+    }
 
         //Enregistrement du tableau dans la session
         $_SESSION['table'] = $table;
@@ -166,11 +181,12 @@ include "./includes/header.inc.html";
     //Si URL = del
     else if (isset($_GET['del'])){
         unset($_SESSION['table']);
+        unlink("uploaded/".$table['img']['name'].".".$table['img']['type']);
         echo '<div class="alert alert-success text-center" role="alert">';
-        echo "Données supprimées";
+        echo "Les données ont été supprimées ainsi que l'image !";
         echo '</div>';
     }
-    //Si la SESSSION est vide on affiche les boutons
+    //Si on n'est sur index.php
     else {
         echo "<a href='index.php?add'><button type='button' class='btn btn-primary'>Ajouter des données</button></a>";
         echo "<a href='index.php?addmore'><button type='button' class='btn btn-secondary'>Ajouter plus de données</button></a>";
@@ -203,6 +219,7 @@ include "./includes/header.inc.html";
             echo "Mme";
         }
     }
+
 ?>
             </div>
         </div>
