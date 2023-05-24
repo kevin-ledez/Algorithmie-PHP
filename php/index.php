@@ -181,7 +181,9 @@ include "./includes/header.inc.html";
     //Si URL = del
     else if (isset($_GET['del'])){
         unset($_SESSION['table']);
-        unlink("uploaded/".$table['img']['name'].".".$table['img']['type']);
+        if (!empty($table['img'])){
+            unlink("uploaded/".$table['img']['name'].".".$table['img']['type']);
+        }
         echo '<div class="alert alert-success text-center" role="alert">';
         echo "Les données ont été supprimées ainsi que l'image !";
         echo '</div>';

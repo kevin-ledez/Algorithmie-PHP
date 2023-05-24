@@ -21,11 +21,11 @@
                 </div>
                 <div class="col-sm-10">
                     <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="radio" name="civility" id="homme" value="homme" checked>
+                        <input class="form-check-input" type="radio" name="civility" id="homme" value="homme" <?php if (!empty($_SESSION) && ($_SESSION['table']['civility']  == 'homme')) echo 'checked' ?>>
                         <label class="form-check-label" for="gridRadios1">Homme</label>
                     </div>
                     <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="radio" name="civility" id="femme" value="femme">
+                        <input class="form-check-input" type="radio" name="civility" id="femme" value="femme" <?php if (!empty($_SESSION) && ($_SESSION['table']['civility']  == 'femme')) echo 'checked' ?>>
                         <label class="form-check-label" for="gridRadios2">Femme</label>
                     </div>
                     <div class="mb-3">
