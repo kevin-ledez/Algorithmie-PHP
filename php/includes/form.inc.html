@@ -1,10 +1,11 @@
+<h2 class="text-center">Ajouter des données</h2>
 <form action="index.php" method="POST">
     <div class="form-floating mb-3">
-        <input type="text" class="form-control" name="prenom" id="prenom" placeholder="Prénom" value="kévin" required>
+        <input type="text" class="form-control" name="prenom" minlength="3" maxlength="25" id="prenom" placeholder="Prénom" value="kévin" required>
         <label for="floatingInput">Prénom</label>
     </div>
     <div class="form-floating mb-3">
-        <input type="text" class="form-control" name="nom" id="nom" placeholder="Nom" value="ledez" required>
+        <input type="text" class="form-control" name="nom" minlength="3" maxlength="25" id="nom" placeholder="Nom" value="ledez" required>
         <label for="floatingInput">Nom</label>
     </div>
     <div class="mb-3">

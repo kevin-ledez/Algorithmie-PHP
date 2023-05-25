@@ -1,3 +1,4 @@
+<h2 class="text-center">Ajouter plus de données</h2>
 <form action="index.php" method="POST" enctype="multipart/form-data">
     <div class="d-flex flex-wrap">
         <div class="card col-md-7 mx-auto my-1">
@@ -72,7 +73,7 @@
                         <label class="form-check-label" for="flexCheckChecked">React</label>
                     </div>
                     <label for="start">Date de naissance</label>
-                    <input type="date" name="dob" value="2000-01-01">
+                    <input type="date" name="dob" value="<?php if (!empty($_SESSION)) { echo $_SESSION['table']['dob']; } else { echo "2000-01-01"; } ?>">
                 </div>
         </div>
     </div>

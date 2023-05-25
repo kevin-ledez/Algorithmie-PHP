@@ -29,14 +29,35 @@ include "./includes/header.inc.html";
     else if (isset($_GET['addmore'])){
         include "./includes/form2.inc.php";
     }
-    //Traitement du formulaire
+    //Traitement du formulaire form HTML
     else if (isset($_POST['register_data']) || isset($_POST['register_data_more'])){
-        $prenom = $_POST['prenom'];
-        $nom = $_POST['nom'];
+        if (strlen($prenom = $_POST['prenom']) < 3){
+            echo '<div class="alert alert-warning" role="alert">';
+            echo 'Il faut au moins 3 caractéres pour le prénom';
+            echo '</div>';
+            exit();
+        }else if (strlen($nom = $_POST['prenom']) > 20){
+            echo '<div class="alert alert-warning" role="alert">';
+            echo 'Le prénom ne peut pas dépasser 20 caractéres';
+            echo '</div>';
+            exit();
+        }
+        if (strlen($prenom = $_POST['nom']) < 3){
+            echo '<div class="alert alert-warning" role="alert">';
+            echo 'Il faut au moins 3 caractéres pour le nom';
+            echo '</div>';
+            exit();
+        }else if (strlen($nom = $_POST['nom']) > 20){
+            echo '<div class="alert alert-warning" role="alert">';
+            echo 'Le nom ne peut pas dépasser 20 caractéres';
+            echo '</div>';
+            exit();
+        }
         $age = $_POST['age'];
         $taille = $_POST['taille'];
         $civility = $_POST['civility'];
     
+    //Traitement du formulaire form PHP
     if (isset($_POST['register_data_more'])){
         $color = isset($_POST['color']) ? $_POST['color'] : '';
         $html = isset($_POST['html']) ? $_POST['html'] : '';
@@ -49,6 +70,7 @@ include "./includes/header.inc.html";
         $react = isset($_POST['react']) ? $_POST['react'] : '';
         $dob = isset($_POST['dob']) ? $_POST['dob'] : '';
 
+        //Création du dossier de stockage des images
         if (!is_dir('uploaded')){
             mkdir('uploaded');
         }
@@ -196,7 +218,7 @@ include "./includes/header.inc.html";
     }
     //Si on n'est sur index.php
     else {
-        echo "<a href='index.php?add'><button type='button' class='btn btn-primary'>Ajouter des données</button></a>";
+        echo "<a href='index.php?add'><button type='button' class='btn btn-primary mx-2'>Ajouter des données</button></a>";
         echo "<a href='index.php?addmore'><button type='button' class='btn btn-secondary'>Ajouter plus de données</button></a>";
     }
 
