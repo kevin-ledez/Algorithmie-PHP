@@ -176,7 +176,9 @@ include "./includes/header.inc.html";
         echo "<h2>Fonction</h2>";
         echo "===> J'utilise ma fonction readTable()<br><br>";
         readTable($table);
-        echo "<img src='uploaded/".$table['img']['name'].".".$table['img']['type']."' alt='image'>";
+        if (!empty($table['img'])){
+            echo "<img src='uploaded/".$table['img']['name'].".".$table['img']['type']."' alt='image'>";
+        }
     }
     //Si URL = del
     else if (isset($_GET['del'])){
