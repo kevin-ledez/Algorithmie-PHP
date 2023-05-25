@@ -93,7 +93,7 @@ include "./includes/header.inc.html";
 
     }
     
-    if (isset($_POST['register_data'])){
+    if (isset($_POST['register_data'])) {
         //Construction du tableau des données
         $table = array(
             'first_name' => $prenom,
