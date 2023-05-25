@@ -49,6 +49,10 @@ include "./includes/header.inc.html";
         $react = isset($_POST['react']) ? $_POST['react'] : '';
         $dob = isset($_POST['dob']) ? $_POST['dob'] : '';
 
+        if (!is_dir('uploaded')){
+            mkdir('uploaded');
+        }
+
         //Dossier de stockage des images
         $filepath = 'uploaded/' . $_FILES['image']['name'];
 
