@@ -10,7 +10,7 @@ include "./includes/header.inc.html";
     <div class="container">
         <div class="row d-flex">
             <div class="col-md-2">
-                <a href="index.php" class="list-group-item list-group-item-action" aria-current="true">Home</a>
+                <a href="index.php" class="btn btn-outline-secondary list-group" aria-current="true">Home</a>
                 <!-- Affichage du menu de navigation si la session n'est pas vide -->
                 <?php 
                     if (!empty($_SESSION)){
@@ -19,8 +19,10 @@ include "./includes/header.inc.html";
                     }
                 ?>
             </div>
+            
             <div class="col">
 <?php
+
     //Si URL = ADD
     if (isset($_GET['add'])){
         include "./includes/form.inc.html";
@@ -33,16 +35,16 @@ include "./includes/header.inc.html";
     else if (isset($_POST['register_data']) || isset($_POST['register_data_more'])){
         if (strlen($prenom = $_POST['prenom']) < 3){
             echo '<div class="alert alert-warning" role="alert">';
-            echo 'Il faut au moins 3 caractéres pour le prénom';
+            echo'Il faut au moins 3 caractéres pour le prénom';
             echo '</div>';
             exit();
-        }else if (strlen($nom = $_POST['prenom']) > 20){
+        }else if (strlen($prenom = $_POST['prenom']) > 20){
             echo '<div class="alert alert-warning" role="alert">';
             echo 'Le prénom ne peut pas dépasser 20 caractéres';
             echo '</div>';
             exit();
         }
-        if (strlen($prenom = $_POST['nom']) < 3){
+        if (strlen($nom = $_POST['nom']) < 3){
             echo '<div class="alert alert-warning" role="alert">';
             echo 'Il faut au moins 3 caractéres pour le nom';
             echo '</div>';
@@ -68,7 +70,6 @@ include "./includes/header.inc.html";
         $bootstrap = isset($_POST['bootstrap']) ? $_POST['bootstrap'] : '';
         $symfony = isset($_POST['symfony']) ? $_POST['symfony'] : '';
         $react = isset($_POST['react']) ? $_POST['react'] : '';
-        $dob = isset($_POST['dob']) ? $_POST['dob'] : '';
 
         //Création du dossier de stockage des images
         if (!is_dir('uploaded')){
@@ -216,6 +217,7 @@ include "./includes/header.inc.html";
         echo "Les données ont été supprimées ainsi que l'image !";
         echo '</div>';
     }
+
     //Si on n'est sur index.php
     else {
         echo "<a href='index.php?add'><button type='button' class='btn btn-primary mx-2'>Ajouter des données</button></a>";

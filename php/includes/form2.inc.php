@@ -29,10 +29,6 @@
                         <input class="form-check-input" type="radio" name="civility" id="femme" value="femme" <?php if (!empty($_SESSION) && ($_SESSION['table']['civility']  == 'femme')) echo 'checked' ?> required>
                         <label class="form-check-label" for="gridRadios2">Femme</label>
                     </div>
-                    <div class="mb-3">
-                        <label for="form-label">Couleur préférée</label>
-                        <input type="color" class="form-control" name="color" id="color" value="<?php if (!empty($_SESSION)) echo $_SESSION['table']['color'] ?>">
-                    </div>
                 </div>
             </div>
         </div>
@@ -71,6 +67,10 @@
                     <div class="form-check">
                         <input class="form-check-input" type="checkbox" name="react" id="react" value="react">
                         <label class="form-check-label" for="flexCheckChecked">React</label>
+                    </div>
+                    <div class="mb-3">
+                        <label for="form-label">Couleur préférée</label>
+                        <input type="color" class="form-control" name="color" id="color" value="<?php if (!empty($_SESSION)) echo $_SESSION['table']['color'] ?>">
                     </div>
                     <label for="start">Date de naissance</label>
                     <input type="date" name="dob" value="<?php if (!empty($_SESSION)) { echo $_SESSION['table']['dob']; } else { echo "2000-01-01"; } ?>">
