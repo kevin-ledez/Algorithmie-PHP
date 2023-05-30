@@ -146,7 +146,7 @@ include "./includes/header.inc.html";
             'bootstrap' => $bootstrap,
             'symfony' => $symfony,
             'react' => $react,
-            'dob' => $dob,
+            'dob' => $age,
             'img' => array(
                 'name' => $name,
                 'type' => $extension,
@@ -163,63 +163,66 @@ include "./includes/header.inc.html";
             echo 'Données sauvegardées';
             echo '</div>';
     }
-    //Si URL = debugging
-    else if (isset($_GET['debugging'])){
-        echo "<h2>Débogage</h2>";
-        echo "===> Lecture du tableau à l'aide de la fonction print_r()";
-            print "<pre>";
-            print_r(array_filter($table));
-            print "</pre>";
-    }
-    //Si URL = concatenation
-    else if (isset($_GET['concatenation'])){
-        echo "<h2>Concaténation</h2>";
-        echo "===> Construction d'une phrase avec le contenu du tableau<br>";
-        echo readSex($table)." ".$table['first_name']." ".$table['last_name']."<br>";
-        echo "J'ai ".$table['age']." ans et je mesure ".$table['size']." m.<br><br>";
 
-        echo "===> Construction d'une phrase après MAJ du tableau<br>";
-        $table['first_name'] = ucfirst($table['first_name']);
-        $table['last_name'] = strtoupper($table['last_name']);
-        echo readSex($table)." ".$table['first_name']." ".$table['last_name']."<br>";
-        echo "J'ai ".$table['age']." ans et je mesure ".$table['size']." m.<br><br>";
-        
-        echo "===> Affichage d'une virgule à la place du point pour la taille<br>";
-        $table['size'] = str_replace('.',',',$table['size']);
-        echo readSex($table)." ".$table['first_name']." ".$table['last_name']."<br>";
-        echo "J'ai ".$table['age']." ans et je mesure ".$table['size']." m.<br><br>";
-    }
-    //Si URL = loop
-    else if (isset($_GET['loop'])){
-        echo "<h2>Boucle</h2>";
-        echo "===> Lecture du tableau à l'aide d'une boucle foreach()<br><br>";
-        $x = 0;
-        foreach ($table as $key => $value) {
-            echo '<p>à la ligne n°'.$x++.' corresponds à clé "'.$key.'" et valeur "'.$value.'"</p>';
+    if (!empty($_SESSION['table'])){
+        //Si URL = debugging
+        if (isset($_GET['debugging'])){
+            echo "<h2>Débogage</h2>";
+            echo "===> Lecture du tableau à l'aide de la fonction print_r()";
+                print "<pre>";
+                print_r(array_filter($table));
+                print "</pre>";
         }
-    }
-    //Si URL = function
-    else if (isset($_GET['function'])){
-        echo "<h2>Fonction</h2>";
-        echo "===> J'utilise ma fonction readTable()<br><br>";
-        readTable($table);
-        if (!empty($table['img'])){
-            echo "<img src='uploaded/".$table['img']['name'].".".$table['img']['type']."' alt='image'>";
+        //Si URL = concatenation
+        else if (isset($_GET['concatenation'])){
+            echo "<h2>Concaténation</h2>";
+            echo "===> Construction d'une phrase avec le contenu du tableau<br>";
+            echo readSex($table)." ".$table['first_name']." ".$table['last_name']."<br>";
+            echo "J'ai ".$table['age']." ans et je mesure ".$table['size']." m.<br><br>";
+
+            echo "===> Construction d'une phrase après MAJ du tableau<br>";
+            $table['first_name'] = ucfirst($table['first_name']);
+            $table['last_name'] = strtoupper($table['last_name']);
+            echo readSex($table)." ".$table['first_name']." ".$table['last_name']."<br>";
+            echo "J'ai ".$table['age']." ans et je mesure ".$table['size']." m.<br><br>";
+            
+            echo "===> Affichage d'une virgule à la place du point pour la taille<br>";
+            $table['size'] = str_replace('.',',',$table['size']);
+            echo readSex($table)." ".$table['first_name']." ".$table['last_name']."<br>";
+            echo "J'ai ".$table['age']." ans et je mesure ".$table['size']." m.<br><br>";
         }
-    }
-    //Si URL = del
-    else if (isset($_GET['del'])){
-        unset($_SESSION['table']);
-        if (!empty($table['img'])){
-            unlink("uploaded/".$table['img']['name'].".".$table['img']['type']);
+        //Si URL = loop
+        else if (isset($_GET['loop'])){
+            echo "<h2>Boucle</h2>";
+            echo "===> Lecture du tableau à l'aide d'une boucle foreach()<br><br>";
+            $x = 0;
+            foreach ($table as $key => $value) {
+                echo '<p>à la ligne n°'.$x++.' corresponds à clé "'.$key.'" et valeur "'.json_encode($value).'"</p>';
+            }
         }
-        echo '<div class="alert alert-success text-center" role="alert">';
-        echo "Les données ont été supprimées ainsi que l'image !";
-        echo '</div>';
+        //Si URL = function
+        else if (isset($_GET['function'])){
+            echo "<h2>Fonction</h2>";
+            echo "===> J'utilise ma fonction readTable()<br><br>";
+            readTable($table);
+            if (!empty($table['img'])){
+                echo "<img class='mw-100' src='uploaded/".$table['img']['name'].".".$table['img']['type']."' alt='image'>";
+            }
+        }
+        //Si URL = del
+        else if (isset($_GET['del'])){
+            unset($_SESSION['table']);
+            if (!empty($table['img'])){
+                unlink("uploaded/".$table['img']['name'].".".$table['img']['type']);
+            }
+            echo '<div class="alert alert-success text-center" role="alert">';
+            echo "Les données ont été supprimées ainsi que l'image !";
+            echo '</div>';
+        }
     }
 
     //Si on n'est sur index.php
-    else {
+    else if (empty($_GET)) {
         echo "<a href='index.php?add'><button type='button' class='btn btn-primary mx-2'>Ajouter des données</button></a>";
         echo "<a href='index.php?addmore'><button type='button' class='btn btn-secondary'>Ajouter plus de données</button></a>";
     }
