@@ -35,7 +35,7 @@ include "./includes/header.inc.html";
     else if (isset($_POST['register_data']) || isset($_POST['register_data_more'])){
         if (strlen($prenom = $_POST['prenom']) < 3){
             echo '<div class="alert alert-warning" role="alert">';
-            echo'Il faut au moins 3 caractéres pour le prénom';
+            echo 'Il faut au moins 3 caractéres pour le prénom';
             echo '</div>';
             exit();
         }else if (strlen($prenom = $_POST['prenom']) > 20){
@@ -57,7 +57,15 @@ include "./includes/header.inc.html";
         }
         $age = $_POST['age'];
         $taille = $_POST['taille'];
-        $civility = $_POST['civility'];
+
+        if ($_POST['civility'] === 'homme' || $_POST['civility'] === 'femme'){
+            $civility = $_POST['civility'];
+        }else{
+            echo '<div class="alert alert-warning" role="alert">';
+            echo 'Veuillez choisir un genre';
+            echo '</div>';
+            exit();
+        }
     
     //Traitement du formulaire form PHP
     if (isset($_POST['register_data_more'])){
